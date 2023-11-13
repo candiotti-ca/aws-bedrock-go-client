@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	cfg, err := config.LoadDefaultConfig(context.Background(), config.WithSharedConfigProfile("edfx"), config.WithRegion("us-east-1"))
+	cfg, err := config.LoadDefaultConfig(context.Background(), config.WithSharedConfigProfile("carla"), config.WithRegion("us-east-1"))
 	if err != nil {
 		panic(err)
 	}

@@ -41,6 +41,7 @@ func New(cfg aws.Config, model Model) Client {
 	}
 }
 
+// Query allows to query Aws Bedrock service with given prompt.
 func (c Client) Query(prompt string) (string, error) {
 	body, err := json.Marshal(InvokeModelBody{Prompt: prompt})
 	if err != nil {

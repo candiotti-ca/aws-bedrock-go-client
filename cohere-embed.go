@@ -36,6 +36,10 @@ type CohereEmbedOutput struct {
 	Embeddings []float64 `json:"embeddings"`
 }
 
-func NewCohereEmbed(cfg aws.Config, model models.Model) Client[CohereEmbedInput, CohereEmbedOutput] {
-	return New[CohereEmbedInput, CohereEmbedOutput](cfg, model)
+func NewCohereEmbedEnglishV3(cfg aws.Config) Client[CohereEmbedInput, CohereEmbedOutput] {
+	return New[CohereEmbedInput, CohereEmbedOutput](cfg, models.Cohere_EmbedEnglishV3)
+}
+
+func NewCohereEmbedMultiV3(cfg aws.Config) Client[CohereEmbedInput, CohereEmbedOutput] {
+	return New[CohereEmbedInput, CohereEmbedOutput](cfg, models.Cohere_EmbedMultiV3)
 }

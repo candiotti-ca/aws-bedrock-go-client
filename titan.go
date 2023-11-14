@@ -25,6 +25,22 @@ type TitanOutput struct {
 	} `json:"results"`
 }
 
-func NewTitan(cfg aws.Config, model models.Model) Client[TitanInput, TitanOutput] {
-	return New[TitanInput, TitanOutput](cfg, model)
+func NewTitanEmbeddingV1(cfg aws.Config) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](cfg, models.Amazon_TitanTextEmbeddingsV1)
+}
+
+func NewTitanEmbeddingV2(cfg aws.Config) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](cfg, models.Amazon_TitanTextEmbeddingsV2)
+}
+
+func NewTitanExpressV1(cfg aws.Config) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](cfg, models.Amazon_TitanTextExpressV1)
+}
+
+func NewTitanTextLarge(cfg aws.Config) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](cfg, models.Amazon_TitanTextLarge)
+}
+
+func NewTitanTextLiteV1(cfg aws.Config) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](cfg, models.Amazon_TitanTextLiteV1)
 }

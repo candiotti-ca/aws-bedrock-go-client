@@ -22,6 +22,14 @@ type AnthropicOutput struct {
 }
 
 // https://docs.anthropic.com/claude/reference/complete_post
-func NewAnthropic(cfg aws.Config, model models.Model) Client[AnthropicInput, AnthropicOutput] {
-	return New[AnthropicInput, AnthropicOutput](cfg, model)
+func NewAnthropicClaudeInstantV1(cfg aws.Config) Client[AnthropicInput, AnthropicOutput] {
+	return New[AnthropicInput, AnthropicOutput](cfg, models.Anthropic_ClaudeInstantV1)
+}
+
+func NewAnthropicClaudeV1(cfg aws.Config) Client[AnthropicInput, AnthropicOutput] {
+	return New[AnthropicInput, AnthropicOutput](cfg, models.Anthropic_ClaudeV1)
+}
+
+func NewAnthropicClaudeV2(cfg aws.Config) Client[AnthropicInput, AnthropicOutput] {
+	return New[AnthropicInput, AnthropicOutput](cfg, models.Anthropic_ClaudeV2)
 }

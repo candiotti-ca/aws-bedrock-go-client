@@ -65,6 +65,26 @@ type AiLabsOutput struct {
 }
 
 // https://docs.ai21.com/reference/j2-complete-ref
-func NewAiLabs(cfg aws.Config, model models.Model) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, model)
+func NewAiGrandeInstruct(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_J2GrandeInstruct)
+}
+
+func NewAiJumboInstruct(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_J2JumboInstruct)
+}
+
+func NewAiJurassic2Mid(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_Jurassic2Mid)
+}
+
+func NewAiJurassic2MidV1(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_Jurassic2Midv1)
+}
+
+func NewAiJurassic2Ultra(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_Jurassic2Ultra)
+}
+
+func NewAiJurassic2UltraV1(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_Jurassic2UltraV1)
 }

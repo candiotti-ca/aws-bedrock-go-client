@@ -20,6 +20,6 @@ type MetaOutput struct {
 	StopReason           string `json:"stop_reason"`
 }
 
-func NewMeta(cfg aws.Config, model models.Model) Client[MetaInput, MetaOutput] {
-	return New[MetaInput, MetaOutput](cfg, model)
+func NewMetaLlamaChatV1(cfg aws.Config) Client[MetaInput, MetaOutput] {
+	return New[MetaInput, MetaOutput](cfg, models.Meta_Llama2ChatV1)
 }

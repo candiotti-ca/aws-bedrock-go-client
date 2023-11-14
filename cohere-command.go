@@ -47,6 +47,6 @@ type CohereCommandOutput struct {
 	} `json:"generations"`
 }
 
-func NewCohereCommand(cfg aws.Config, model models.Model) Client[CohereCommandInput, CohereCommandOutput] {
-	return New[CohereCommandInput, CohereCommandOutput](cfg, model)
+func NewCohereCommandV14(cfg aws.Config) Client[CohereCommandInput, CohereCommandOutput] {
+	return New[CohereCommandInput, CohereCommandOutput](cfg, models.Cohere_CommandV14)
 }

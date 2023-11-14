@@ -22,6 +22,10 @@ type StabilityOutput struct {
 }
 
 // https://platform.stability.ai/docs/api-reference
-func NewStability(cfg aws.Config, model models.Model) Client[StabilityInput, StabilityOutput] {
-	return New[StabilityInput, StabilityOutput](cfg, model)
+func NewStableDiffusionXlV0(cfg aws.Config) Client[StabilityInput, StabilityOutput] {
+	return New[StabilityInput, StabilityOutput](cfg, models.StabilityAI_StableDiffusionXLV0)
+}
+
+func NewStableDiffusionXlV1(cfg aws.Config) Client[StabilityInput, StabilityOutput] {
+	return New[StabilityInput, StabilityOutput](cfg, models.StabilityAI_StableDiffusionXLV1)
 }

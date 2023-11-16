@@ -1,8 +1,6 @@
 package awsbedrockgoclient
 
 import (
-	"aws-bedrock-go-client/models"
-
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/google/uuid"
 )
@@ -10,17 +8,24 @@ import (
 type CohereEmbedInputType string
 
 const (
+	// In search use-cases, use search_document when you encode documents for embeddings that you store in a vector database
 	CohereEmbedInputType_SEARCH_DOCUMENT CohereEmbedInputType = "search_document"
-	CohereEmbedInputType_SEARCH_QUERY    CohereEmbedInputType = "search_query"
-	CohereEmbedInputType_CLASSIFICATION  CohereEmbedInputType = "classification"
-	CohereEmbedInputType_CLUSTERING      CohereEmbedInputType = "clustering"
+	// Use search_query when querying your vector DB to find relevant documents
+	CohereEmbedInputType_SEARCH_QUERY CohereEmbedInputType = "search_query"
+	// Use classification when using embeddings as an input to a text classifier
+	CohereEmbedInputType_CLASSIFICATION CohereEmbedInputType = "classification"
+	// Use clustering to cluster the embeddings
+	CohereEmbedInputType_CLUSTERING CohereEmbedInputType = "clustering"
 )
 
 type CohereEmbedTruncate string
 
 const (
-	CohereEmbedTruncate_NONE  CohereEmbedTruncate = "NONE"
-	CohereEmbedTruncate_LEFT  CohereEmbedTruncate = "LEFT"
+	// (Default) Returns an error when the input exceeds the maximum input token length
+	CohereEmbedTruncate_NONE CohereEmbedTruncate = "NONE"
+	// Discard the start of the input
+	CohereEmbedTruncate_LEFT CohereEmbedTruncate = "LEFT"
+	// Discards the end of the input
 	CohereEmbedTruncate_RIGHT CohereEmbedTruncate = "RIGHT"
 )
 
@@ -37,9 +42,9 @@ type CohereEmbedOutput struct {
 }
 
 func NewCohereEmbedEnglishV3(cfg aws.Config) Client[CohereEmbedInput, CohereEmbedOutput] {
-	return New[CohereEmbedInput, CohereEmbedOutput](cfg, models.Cohere_EmbedEnglishV3)
+	return New[CohereEmbedInput, CohereEmbedOutput](cfg, cohereEmbedEnglishV3)
 }
 
 func NewCohereEmbedMultiV3(cfg aws.Config) Client[CohereEmbedInput, CohereEmbedOutput] {
-	return New[CohereEmbedInput, CohereEmbedOutput](cfg, models.Cohere_EmbedMultiV3)
+	return New[CohereEmbedInput, CohereEmbedOutput](cfg, cohereEmbedMultiV3)
 }

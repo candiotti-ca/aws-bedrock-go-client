@@ -1,16 +1,16 @@
 package awsbedrockgoclient
 
 import (
-	"aws-bedrock-go-client/models"
-
 	"github.com/aws/aws-sdk-go-v2/aws"
 )
 
 type MetaInput struct {
-	Prompt       string  `json:"prompt"`
-	Temperature  float64 `json:"temperature"`
-	TopP         float64 `json:"top_p"`
-	MaxGenLength int     `json:"max_gen_len"`
+	Prompt string `json:"prompt"`
+	// Use a lower value to decrease randomness in the response.
+	Temperature float64 `json:"temperature" validate:"min=0,max=1"`
+	// Use a lower value to ignore less probable options
+	TopP         float64 `json:"top_p" validate:"min=0,max=1"`
+	MaxGenLength int     `json:"max_gen_len" validate:"min=1,max=2048"`
 }
 
 type MetaOutput struct {
@@ -21,5 +21,5 @@ type MetaOutput struct {
 }
 
 func NewMetaLlamaChatV1(cfg aws.Config) Client[MetaInput, MetaOutput] {
-	return New[MetaInput, MetaOutput](cfg, models.Meta_Llama2ChatV1)
+	return New[MetaInput, MetaOutput](cfg, metaLlama2ChatV1)
 }

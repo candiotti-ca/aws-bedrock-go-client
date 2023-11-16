@@ -1,16 +1,18 @@
 package awsbedrockgoclient
 
 import (
-	"aws-bedrock-go-client/models"
-
 	"github.com/aws/aws-sdk-go-v2/aws"
 )
 
+// See full documentation on https://platform.stability.ai/docs/api-reference
 type StabilityInput struct {
 	Prompts []string `json:"text_prompts"`
-	Scale   float64  `json:"cfg_scale"`
-	Steps   int      `json:"steps"`
-	Seed    int      `json:"seed"`
+	// Determines how much the final image portrays the prompt
+	Scale float64 `json:"cfg_scale" validate:"min=0,max=30"`
+	// Generation step determines how many times the image is sampled
+	Steps int `json:"steps" validate:"min=10,max=150"`
+	// The seed determines the initial noise setting
+	Seed int `json:"seed"`
 }
 
 type StabilityOutput struct {
@@ -21,11 +23,10 @@ type StabilityOutput struct {
 	} `json:"generations"`
 }
 
-// https://platform.stability.ai/docs/api-reference
 func NewStableDiffusionXlV0(cfg aws.Config) Client[StabilityInput, StabilityOutput] {
-	return New[StabilityInput, StabilityOutput](cfg, models.StabilityAI_StableDiffusionXLV0)
+	return New[StabilityInput, StabilityOutput](cfg, stabilityAIStableDiffusionXLV0)
 }
 
 func NewStableDiffusionXlV1(cfg aws.Config) Client[StabilityInput, StabilityOutput] {
-	return New[StabilityInput, StabilityOutput](cfg, models.StabilityAI_StableDiffusionXLV1)
+	return New[StabilityInput, StabilityOutput](cfg, stabilityAIStableDiffusionXLV1)
 }

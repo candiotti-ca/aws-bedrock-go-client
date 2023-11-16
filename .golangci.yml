@@ -1,0 +1,10 @@
+linters:
+  enable-all: true
+  disable:
+    - tagliatelle
+run:
+  concurrency: 4
+  issues-exit-code: 2
+  skip-dirs:
+    - cmd
+  allow-parallel-runners: true

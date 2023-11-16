@@ -1,26 +1,31 @@
 package awsbedrockgoclient
 
 import (
-	"aws-bedrock-go-client/models"
-
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/google/uuid"
 )
 
 type AiLabsInput struct {
-	Prompt        string   `json:"prompt"`
-	Temperature   float64  `json:"temperature"`
-	TopP          float64  `json:"topP"`
-	MaxTokens     int      `json:"maxTokens"`
+	Prompt string `json:"prompt"`
+	// Use a lower value to decrease randomness in the response
+	Temperature float64 `json:"temperature" validate:"min=0,max=1"`
+	// Use a lower value to ignore less probable options
+	TopP float64 `json:"topP" validate:"min=0,max=1"`
+	// Specify the maximum number of tokens to use in the generated response
+	MaxTokens int `json:"maxTokens" validate:"min=0,max=8191"`
+	// Character sequences that stops generation. Use pipe to separate sequences
 	StopSequences []string `json:"stopSequences"`
-	CountPenalty  struct {
-		Scale int `json:"scale"`
+	// Use a higher value to lower the probability of generating new tokens that already appear at least once in the prompt or in the completion
+	CountPenalty struct {
+		Scale int `json:"scale" validate:"min=0,max=1"`
 	} `json:"countPenalty"`
+	// Use a higher value to lower the probability of generating new tokens that already appear at least once in the prompt or in the completion
 	PresencePenalty struct {
-		Scale float64 `json:"scale"`
+		Scale float64 `json:"scale" validate:"min=0,max=5"`
 	} `json:"presencePenalty"`
+	// Use a higher value to lower the probability of generating new tokens that already appear at least once in the prompt or in the completion
 	FrequencePenalty struct {
-		Scale int `json:"scale"`
+		Scale int `json:"scale" validate:"min=0,max=500"`
 	} `json:"frequencePenalty"`
 }
 
@@ -66,25 +71,25 @@ type AiLabsOutput struct {
 
 // https://docs.ai21.com/reference/j2-complete-ref
 func NewAiGrandeInstruct(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_J2GrandeInstruct)
+	return New[AiLabsInput, AiLabsOutput](cfg, ai21J2GrandeInstruct)
 }
 
 func NewAiJumboInstruct(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_J2JumboInstruct)
+	return New[AiLabsInput, AiLabsOutput](cfg, ai21J2JumboInstruct)
 }
 
 func NewAiJurassic2Mid(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_Jurassic2Mid)
+	return New[AiLabsInput, AiLabsOutput](cfg, ai21Jurassic2Mid)
 }
 
 func NewAiJurassic2MidV1(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_Jurassic2Midv1)
+	return New[AiLabsInput, AiLabsOutput](cfg, ai21Jurassic2Midv1)
 }
 
 func NewAiJurassic2Ultra(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_Jurassic2Ultra)
+	return New[AiLabsInput, AiLabsOutput](cfg, ai21Jurassic2Ultra)
 }
 
 func NewAiJurassic2UltraV1(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, models.AI21_Jurassic2UltraV1)
+	return New[AiLabsInput, AiLabsOutput](cfg, ai21Jurassic2UltraV1)
 }

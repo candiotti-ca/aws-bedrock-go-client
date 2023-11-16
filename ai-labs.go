@@ -1,7 +1,6 @@
 package awsbedrockgoclient
 
 import (
-	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/google/uuid"
 )
 
@@ -70,26 +69,26 @@ type AiLabsOutput struct {
 }
 
 // https://docs.ai21.com/reference/j2-complete-ref
-func NewAiGrandeInstruct(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, ai21J2GrandeInstruct)
+func NewAiGrandeInstruct(b BedrockRuntime) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](b, ai21J2GrandeInstruct)
 }
 
-func NewAiJumboInstruct(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, ai21J2JumboInstruct)
+func NewAiJumboInstruct(b BedrockRuntime) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](b, ai21J2JumboInstruct)
 }
 
-func NewAiJurassic2Mid(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, ai21Jurassic2Mid)
+func NewAiJurassic2Mid(b BedrockRuntime) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](b, ai21Jurassic2Mid)
 }
 
-func NewAiJurassic2MidV1(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, ai21Jurassic2Midv1)
+func NewAiJurassic2MidV1(b BedrockRuntime) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](b, ai21Jurassic2Midv1)
 }
 
-func NewAiJurassic2Ultra(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, ai21Jurassic2Ultra)
+func NewAiJurassic2Ultra(b BedrockRuntime) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](b, ai21Jurassic2Ultra)
 }
 
-func NewAiJurassic2UltraV1(cfg aws.Config) Client[AiLabsInput, AiLabsOutput] {
-	return New[AiLabsInput, AiLabsOutput](cfg, ai21Jurassic2UltraV1)
+func NewAiJurassic2UltraV1(b BedrockRuntime) Client[AiLabsInput, AiLabsOutput] {
+	return New[AiLabsInput, AiLabsOutput](b, ai21Jurassic2UltraV1)
 }

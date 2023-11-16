@@ -1,9 +1,5 @@
 package awsbedrockgoclient
 
-import (
-	"github.com/aws/aws-sdk-go-v2/aws"
-)
-
 type TitanInput struct {
 	Prompt string `json:"inputText"`
 	Config struct {
@@ -26,22 +22,22 @@ type TitanOutput struct {
 	} `json:"results"`
 }
 
-func NewTitanEmbeddingV1(cfg aws.Config) Client[TitanInput, TitanOutput] {
-	return New[TitanInput, TitanOutput](cfg, amazonTitanTextEmbeddingsV1)
+func NewTitanEmbeddingV1(b BedrockRuntime) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](b, amazonTitanTextEmbeddingsV1)
 }
 
-func NewTitanEmbeddingV2(cfg aws.Config) Client[TitanInput, TitanOutput] {
-	return New[TitanInput, TitanOutput](cfg, amazonTitanTextEmbeddingsV2)
+func NewTitanEmbeddingV2(b BedrockRuntime) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](b, amazonTitanTextEmbeddingsV2)
 }
 
-func NewTitanExpressV1(cfg aws.Config) Client[TitanInput, TitanOutput] {
-	return New[TitanInput, TitanOutput](cfg, amazonTitanTextExpressV1)
+func NewTitanExpressV1(b BedrockRuntime) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](b, amazonTitanTextExpressV1)
 }
 
-func NewTitanTextLarge(cfg aws.Config) Client[TitanInput, TitanOutput] {
-	return New[TitanInput, TitanOutput](cfg, amazonTitanTextLarge)
+func NewTitanTextLarge(b BedrockRuntime) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](b, amazonTitanTextLarge)
 }
 
-func NewTitanTextLiteV1(cfg aws.Config) Client[TitanInput, TitanOutput] {
-	return New[TitanInput, TitanOutput](cfg, amazonTitanTextLiteV1)
+func NewTitanTextLiteV1(b BedrockRuntime) Client[TitanInput, TitanOutput] {
+	return New[TitanInput, TitanOutput](b, amazonTitanTextLiteV1)
 }

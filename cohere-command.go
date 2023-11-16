@@ -1,7 +1,6 @@
 package awsbedrockgoclient
 
 import (
-	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/google/uuid"
 )
 
@@ -58,6 +57,6 @@ type CohereCommandOutput struct {
 	} `json:"generations"`
 }
 
-func NewCohereCommandV14(cfg aws.Config) Client[CohereCommandInput, CohereCommandOutput] {
-	return New[CohereCommandInput, CohereCommandOutput](cfg, cohereCommandV14)
+func NewCohereCommandV14(b BedrockRuntime) Client[CohereCommandInput, CohereCommandOutput] {
+	return New[CohereCommandInput, CohereCommandOutput](b, cohereCommandV14)
 }

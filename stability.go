@@ -1,9 +1,5 @@
 package awsbedrockgoclient
 
-import (
-	"github.com/aws/aws-sdk-go-v2/aws"
-)
-
 // See full documentation on https://platform.stability.ai/docs/api-reference
 type StabilityInput struct {
 	Prompts []string `json:"text_prompts"`
@@ -23,10 +19,10 @@ type StabilityOutput struct {
 	} `json:"generations"`
 }
 
-func NewStableDiffusionXlV0(cfg aws.Config) Client[StabilityInput, StabilityOutput] {
-	return New[StabilityInput, StabilityOutput](cfg, stabilityAIStableDiffusionXLV0)
+func NewStableDiffusionXlV0(b BedrockRuntime) Client[StabilityInput, StabilityOutput] {
+	return New[StabilityInput, StabilityOutput](b, stabilityAIStableDiffusionXLV0)
 }
 
-func NewStableDiffusionXlV1(cfg aws.Config) Client[StabilityInput, StabilityOutput] {
-	return New[StabilityInput, StabilityOutput](cfg, stabilityAIStableDiffusionXLV1)
+func NewStableDiffusionXlV1(b BedrockRuntime) Client[StabilityInput, StabilityOutput] {
+	return New[StabilityInput, StabilityOutput](b, stabilityAIStableDiffusionXLV1)
 }

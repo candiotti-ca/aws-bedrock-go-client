@@ -10,18 +10,22 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+type BedrockRuntime interface {
+	InvokeModel(ctx context.Context, params *bedrockruntime.InvokeModelInput, optFns ...func(*bedrockruntime.Options)) (*bedrockruntime.InvokeModelOutput, error)
+	InvokeModelWithResponseStream(ctx context.Context, params *bedrockruntime.InvokeModelWithResponseStreamInput, optFns ...func(*bedrockruntime.Options)) (*bedrockruntime.InvokeModelWithResponseStreamOutput, error)
+}
+
+// See documentation on https://docs.aws.amazon.com/bedrock/latest/APIReference
 type Client[I, O any] struct {
-	bedrockClient     *bedrockruntime.Client
+	bedrockRuntime    BedrockRuntime
 	model             string
 	supportsStreaming bool
 	validate          *validator.Validate
 }
 
-// https://docs.aws.amazon.com/bedrock/latest/APIReference
-func New[I, O any](cfg aws.Config, model Model) Client[I, O] {
-	b := bedrockruntime.NewFromConfig(cfg)
+func New[I, O any](b BedrockRuntime, model Model) Client[I, O] {
 	return Client[I, O]{
-		bedrockClient:     b,
+		bedrockRuntime:    b,
 		model:             string(model),
 		supportsStreaming: doesSupportStreaming(model),
 		validate:          validator.New(validator.WithRequiredStructEnabled()),
@@ -38,7 +42,7 @@ func (c Client[I, O]) Query(ctx context.Context, input I) (*O, error) {
 		return nil, fmt.Errorf("cannot marshal input: %w", err)
 	}
 
-	output, err := c.bedrockClient.InvokeModel(ctx, &bedrockruntime.InvokeModelInput{
+	output, err := c.bedrockRuntime.InvokeModel(ctx, &bedrockruntime.InvokeModelInput{
 		ModelId:     &c.model,
 		Body:        body,
 		Accept:      aws.String("*/*"),
@@ -71,7 +75,7 @@ func (c Client[I, O]) QueryStream(ctx context.Context, input I) (*bedrockruntime
 		return nil, fmt.Errorf("cannot marshal input: %w", err)
 	}
 
-	output, err := c.bedrockClient.InvokeModelWithResponseStream(ctx, &bedrockruntime.InvokeModelWithResponseStreamInput{
+	output, err := c.bedrockRuntime.InvokeModelWithResponseStream(ctx, &bedrockruntime.InvokeModelWithResponseStreamInput{
 		ModelId:     &c.model,
 		Body:        body,
 		Accept:      aws.String("*/*"),

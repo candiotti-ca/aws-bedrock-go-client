@@ -1,9 +1,5 @@
 package awsbedrockgoclient
 
-import (
-	"github.com/aws/aws-sdk-go-v2/aws"
-)
-
 // Complete documentation on https://docs.anthropic.com/claude/reference/complete_post
 type AnthropicInput struct {
 	Prompt string `json:"prompt"`
@@ -24,14 +20,14 @@ type AnthropicOutput struct {
 	Model        string `json:"model"`
 }
 
-func NewAnthropicClaudeInstantV1(cfg aws.Config) Client[AnthropicInput, AnthropicOutput] {
-	return New[AnthropicInput, AnthropicOutput](cfg, anthropicClaudeInstantV1)
+func NewAnthropicClaudeInstantV1(b BedrockRuntime) Client[AnthropicInput, AnthropicOutput] {
+	return New[AnthropicInput, AnthropicOutput](b, anthropicClaudeInstantV1)
 }
 
-func NewAnthropicClaudeV1(cfg aws.Config) Client[AnthropicInput, AnthropicOutput] {
-	return New[AnthropicInput, AnthropicOutput](cfg, anthropicClaudeV1)
+func NewAnthropicClaudeV1(b BedrockRuntime) Client[AnthropicInput, AnthropicOutput] {
+	return New[AnthropicInput, AnthropicOutput](b, anthropicClaudeV1)
 }
 
-func NewAnthropicClaudeV2(cfg aws.Config) Client[AnthropicInput, AnthropicOutput] {
-	return New[AnthropicInput, AnthropicOutput](cfg, anthropicClaudeV2)
+func NewAnthropicClaudeV2(b BedrockRuntime) Client[AnthropicInput, AnthropicOutput] {
+	return New[AnthropicInput, AnthropicOutput](b, anthropicClaudeV2)
 }

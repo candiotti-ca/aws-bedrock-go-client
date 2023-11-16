@@ -1,9 +1,5 @@
 package awsbedrockgoclient
 
-import (
-	"github.com/aws/aws-sdk-go-v2/aws"
-)
-
 type MetaInput struct {
 	Prompt string `json:"prompt"`
 	// Use a lower value to decrease randomness in the response.
@@ -20,6 +16,6 @@ type MetaOutput struct {
 	StopReason           string `json:"stop_reason"`
 }
 
-func NewMetaLlamaChatV1(cfg aws.Config) Client[MetaInput, MetaOutput] {
-	return New[MetaInput, MetaOutput](cfg, metaLlama2ChatV1)
+func NewMetaLlamaChatV1(b BedrockRuntime) Client[MetaInput, MetaOutput] {
+	return New[MetaInput, MetaOutput](b, metaLlama2ChatV1)
 }

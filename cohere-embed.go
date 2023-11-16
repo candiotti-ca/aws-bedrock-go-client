@@ -1,7 +1,6 @@
 package awsbedrockgoclient
 
 import (
-	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/google/uuid"
 )
 
@@ -41,10 +40,10 @@ type CohereEmbedOutput struct {
 	Embeddings []float64 `json:"embeddings"`
 }
 
-func NewCohereEmbedEnglishV3(cfg aws.Config) Client[CohereEmbedInput, CohereEmbedOutput] {
-	return New[CohereEmbedInput, CohereEmbedOutput](cfg, cohereEmbedEnglishV3)
+func NewCohereEmbedEnglishV3(b BedrockRuntime) Client[CohereEmbedInput, CohereEmbedOutput] {
+	return New[CohereEmbedInput, CohereEmbedOutput](b, cohereEmbedEnglishV3)
 }
 
-func NewCohereEmbedMultiV3(cfg aws.Config) Client[CohereEmbedInput, CohereEmbedOutput] {
-	return New[CohereEmbedInput, CohereEmbedOutput](cfg, cohereEmbedMultiV3)
+func NewCohereEmbedMultiV3(b BedrockRuntime) Client[CohereEmbedInput, CohereEmbedOutput] {
+	return New[CohereEmbedInput, CohereEmbedOutput](b, cohereEmbedMultiV3)
 }

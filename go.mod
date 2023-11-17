@@ -1,4 +1,4 @@
-module aws-bedrock-go-client
+module github.com/candiotti-ca/aws-bedrock-go-client
 
 go 1.20
 

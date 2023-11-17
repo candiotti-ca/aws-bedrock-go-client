@@ -1,9 +1,10 @@
 package awsbedrockgoclient_test
 
 import (
-	awsbedrockgoclient "aws-bedrock-go-client"
 	"context"
 	"fmt"
+
+	awsbedrockgoclient "github.com/candiotti-ca/aws-bedrock-go-client"
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/bedrockruntime"

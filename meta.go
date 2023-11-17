@@ -3,10 +3,10 @@ package awsbedrockgoclient
 type MetaInput struct {
 	Prompt string `json:"prompt"`
 	// Use a lower value to decrease randomness in the response.
-	Temperature float64 `json:"temperature" validate:"min=0,max=1"`
+	Temperature float64 `json:"temperature" validate:"min=0,max=1" default:"0.5"`
 	// Use a lower value to ignore less probable options
-	TopP         float64 `json:"top_p" validate:"min=0,max=1"`
-	MaxGenLength int     `json:"max_gen_len" validate:"min=1,max=2048"`
+	TopP         float64 `json:"top_p" validate:"min=0,max=1" default:"0.9"`
+	MaxGenLength int     `json:"max_gen_len" validate:"min=1,max=2048" default:"512"`
 }
 
 type MetaOutput struct {

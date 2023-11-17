@@ -7,11 +7,11 @@ import (
 type AiLabsInput struct {
 	Prompt string `json:"prompt"`
 	// Use a lower value to decrease randomness in the response
-	Temperature float64 `json:"temperature" validate:"min=0,max=1"`
+	Temperature float64 `json:"temperature" validate:"min=0,max=1" default:"0.5"`
 	// Use a lower value to ignore less probable options
-	TopP float64 `json:"topP" validate:"min=0,max=1"`
+	TopP float64 `json:"topP" validate:"min=0,max=1" default:"0.5"`
 	// Specify the maximum number of tokens to use in the generated response
-	MaxTokens int `json:"maxTokens" validate:"min=0,max=8191"`
+	MaxTokens int `json:"maxTokens" validate:"min=0,max=8191" default:"200"`
 	// Character sequences that stops generation. Use pipe to separate sequences
 	StopSequences []string `json:"stopSequences"`
 	// Use a higher value to lower the probability of generating new tokens that already appear at least once in the prompt or in the completion

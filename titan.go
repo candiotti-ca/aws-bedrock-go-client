@@ -6,8 +6,8 @@ type TitanInput struct {
 		// Influences randomness response. A high temperature will give high random responses.
 		Temperature float64 `json:"temperature" validate:"min=0,max=1"`
 		// A high value tends to ignore less probable responses.
-		TopP          float64 `json:"topP" validate:"min=0,max=1"`
-		MaxTokenCount int     `json:"maxTokenCount" validate:"min=0,max=8000"`
+		TopP          float64 `json:"topP" validate:"min=0,max=1" default:"1"`
+		MaxTokenCount int     `json:"maxTokenCount" validate:"min=0,max=8000" default:"512"`
 		// Character sequences that stops generation. Use pipe to separate sequences.
 		StopSequences []string `json:"stopSequences" validate:"len=20"`
 	} `json:"textGenerationConfig"`

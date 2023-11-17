@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/bedrockruntime"
 	"github.com/go-playground/validator/v10"
+	"github.com/mcuadros/go-defaults"
 )
 
 type BedrockRuntime interface {
@@ -33,6 +34,7 @@ func New[I, O any](b BedrockRuntime, model Model) Client[I, O] {
 }
 
 func (c Client[I, O]) Query(ctx context.Context, input I) (*O, error) {
+	defaults.SetDefaults(&input)
 	if err := c.validate.Struct(input); err != nil {
 		return nil, fmt.Errorf("invalid input: %w", err)
 	}
@@ -52,13 +54,13 @@ func (c Client[I, O]) Query(ctx context.Context, input I) (*O, error) {
 		return nil, fmt.Errorf("invoke model request has failed: %w", err)
 	}
 
-	var response *O
-	err = json.Unmarshal(output.Body, response)
+	var response O
+	err = json.Unmarshal(output.Body, &response)
 	if err != nil {
 		return nil, fmt.Errorf("cannot unmarshal response: %w", err)
 	}
 
-	return response, nil
+	return &response, nil
 }
 
 func (c Client[I, O]) QueryStream(ctx context.Context, input I) (*bedrockruntime.InvokeModelWithResponseStreamOutput, error) {

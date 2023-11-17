@@ -4,9 +4,9 @@ package awsbedrockgoclient
 type StabilityInput struct {
 	Prompts []string `json:"text_prompts"`
 	// Determines how much the final image portrays the prompt
-	Scale float64 `json:"cfg_scale" validate:"min=0,max=30"`
+	Scale float64 `json:"cfg_scale" validate:"min=0,max=30" default:"10"`
 	// Generation step determines how many times the image is sampled
-	Steps int `json:"steps" validate:"min=10,max=150"`
+	Steps int `json:"steps" validate:"min=10,max=150" default:"30"`
 	// The seed determines the initial noise setting
 	Seed int `json:"seed"`
 }

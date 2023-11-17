@@ -2,11 +2,13 @@ package awsbedrockgoclient
 
 import (
 	"context"
+	"errors"
 	"os"
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/service/bedrockruntime"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 type BedrockMock struct {
@@ -31,25 +33,71 @@ func TestClientQuery(t *testing.T) {
 		invokeModel: func(ctx context.Context, params *bedrockruntime.InvokeModelInput, optFns ...func(*bedrockruntime.Options)) (*bedrockruntime.InvokeModelOutput, error) {
 			inputBody = params.Body
 			return &bedrockruntime.InvokeModelOutput{
-				Body: testDataJSON(t, "TestClientQuery.output.json"),
+				Body: loadJSONFile(t, "TestClientQuery.output.json"),
 			}, nil
 		},
 	}
 	client := New[CohereCommandInput, CohereCommandOutput](bedrockMock, model)
 
 	response, err := client.Query(context.Background(), CohereCommandInput{
-		Prompt:         "Does this work?",
-		NumGenerations: 1,
+		Prompt: "Does this work?",
 	})
 
-	assert.NoError(t, err)
-	expectedInput := string(testDataJSON(t, "TestClientQuery.input.json"))
+	require.NoError(t, err)
+	expectedInput := string(loadJSONFile(t, "TestClientQuery.input.json"))
 	assert.JSONEq(t, expectedInput, string(inputBody))
 	assert.Len(t, response.Generations, 1)
 	assert.Equal(t, "response", response.Generations[0].Text)
 }
 
-func testDataJSON(t *testing.T, fileName string) []byte {
+func TestClientQuery_invalidInput(t *testing.T) {
+	t.Parallel()
+
+	model := cohereCommandV14
+	bedrockMock := BedrockMock{}
+	client := New[CohereCommandInput, CohereCommandOutput](bedrockMock, model)
+
+	response, err := client.Query(context.Background(), CohereCommandInput{})
+
+	require.Error(t, err)
+	assert.Nil(t, response)
+}
+
+func TestClientQuery_invokeModelError(t *testing.T) {
+	t.Parallel()
+
+	model := cohereCommandV14
+	bedrockMock := BedrockMock{
+		invokeModel: func(ctx context.Context, params *bedrockruntime.InvokeModelInput, optFns ...func(*bedrockruntime.Options)) (*bedrockruntime.InvokeModelOutput, error) {
+			return nil, errors.New("test fail")
+		},
+	}
+	client := New[CohereCommandInput, CohereCommandOutput](bedrockMock, model)
+
+	response, err := client.Query(context.Background(), CohereCommandInput{})
+
+	require.Error(t, err)
+	assert.Nil(t, response)
+}
+
+func TestClientQuery_invalidResponse(t *testing.T) {
+	t.Parallel()
+
+	model := cohereCommandV14
+	bedrockMock := BedrockMock{
+		invokeModel: func(ctx context.Context, params *bedrockruntime.InvokeModelInput, optFns ...func(*bedrockruntime.Options)) (*bedrockruntime.InvokeModelOutput, error) {
+			return nil, nil
+		},
+	}
+	client := New[CohereCommandInput, CohereCommandOutput](bedrockMock, model)
+
+	response, err := client.Query(context.Background(), CohereCommandInput{})
+
+	require.Error(t, err)
+	assert.Nil(t, response)
+}
+
+func loadJSONFile(t *testing.T, fileName string) []byte {
 	file, err := os.ReadFile("testdata/" + fileName)
 	if err != nil {
 		t.Fatal(err)

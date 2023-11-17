@@ -27,24 +27,24 @@ const (
 )
 
 type CohereCommandInput struct {
-	Prompt string `json:"prompt"`
+	Prompt string `json:"prompt" validate:"required"`
 	// (Optional) Use a lower value to decrease randomness in the response
-	Temperature float64 `json:"temperature" validate:"min=0,max=5"`
+	Temperature float64 `json:"temperature" validate:"min=0,max=5" default:"0.9"`
 	// (Optional) Use a lower value to ignore less probable options. Set to 0 or 1.0 to disable. If both p and k are enabled, p acts after k
-	TopP float64 `json:"p" validate:"min=0,max=1"`
+	TopP float64 `json:"p" validate:"min=0,max=1" default:"0.75"`
 	// (Optional) Specify the number of token choices the model uses to generate the next token. If both p and k are enabled, p acts after k
-	TopK             float64 `json:"k" validate:"min=0,max=500"`
-	MaxReponseLength int     `json:"max_tokens" validate:"min=1,max=4096"`
+	TopK             float64 `json:"k,omitempty" validate:"min=0,max=500"`
+	MaxReponseLength int     `json:"max_tokens,omitempty" validate:"omitempty,min=1,max=4096"`
 	// (Optional) Configure up to four sequences that the model recognizes
-	StopSequences []string `json:"stop_sequences"`
+	StopSequences []string `json:"stop_sequences,omitempty"`
 	// (optional) Specify how and if the token likelihoods are returned with the response
-	ReturnLikelihoods CohereCommandReturnLikelihoods `json:"return_likelihoods"`
-	Stream            bool                           `json:"stream"`
-	NumGenerations    int                            `json:"num_generations" validate:"min=1,max=5"`
+	ReturnLikelihoods CohereCommandReturnLikelihoods `json:"return_likelihoods" default:"END"`
+	Stream            bool                           `json:"stream,omitempty"`
+	NumGenerations    int                            `json:"num_generations,omitempty" validate:"omitempty,min=1,max=5"`
 	// (Optional) prevents the model from generating unwanted tokens or incentivizes the model to include desired tokens
-	LogitBias map[string]float64 `json:"logit_bias" validate:"min=-10,max=10"`
+	LogitBias map[string]float64 `json:"logit_bias,omitempty" validate:"dive,dive,min=-10,max=10"`
 	// (Optional) Specifies how the API handles inputs longer than the maximum token length
-	Truncate CohereCommandTruncate `json:"truncate"`
+	Truncate CohereCommandTruncate `json:"truncate" default:"NONE"`
 }
 
 type CohereCommandOutput struct {

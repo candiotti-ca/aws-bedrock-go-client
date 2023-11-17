@@ -1,4 +1,7 @@
 {
     "prompt": "Does this work?",
-    "num_generations": 1
+    "temperature": 0.9,
+    "p": 0.75,
+    "return_likelihoods": "END",
+    "truncate": "NONE"
 }

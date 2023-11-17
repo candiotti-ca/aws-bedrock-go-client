@@ -59,7 +59,7 @@ func TestClientQuery_invalidInput(t *testing.T) {
 
 	response, err := client.Query(context.Background(), CohereCommandInput{})
 
-	require.Error(t, err)
+	require.ErrorContains(t, err, "invalid input")
 	assert.Nil(t, response)
 }
 
@@ -74,9 +74,9 @@ func TestClientQuery_invokeModelError(t *testing.T) {
 	}
 	client := New[CohereCommandInput, CohereCommandOutput](bedrockMock, model)
 
-	response, err := client.Query(context.Background(), CohereCommandInput{})
+	response, err := client.Query(context.Background(), CohereCommandInput{Prompt: "test"})
 
-	require.Error(t, err)
+	require.ErrorContains(t, err, "invoke model request has failed")
 	assert.Nil(t, response)
 }
 
@@ -86,14 +86,14 @@ func TestClientQuery_invalidResponse(t *testing.T) {
 	model := cohereCommandV14
 	bedrockMock := BedrockMock{
 		invokeModel: func(ctx context.Context, params *bedrockruntime.InvokeModelInput, optFns ...func(*bedrockruntime.Options)) (*bedrockruntime.InvokeModelOutput, error) {
-			return nil, nil
+			return &bedrockruntime.InvokeModelOutput{Body: []byte("not a json string")}, nil
 		},
 	}
 	client := New[CohereCommandInput, CohereCommandOutput](bedrockMock, model)
 
-	response, err := client.Query(context.Background(), CohereCommandInput{})
+	response, err := client.Query(context.Background(), CohereCommandInput{Prompt: "test"})
 
-	require.Error(t, err)
+	require.ErrorContains(t, err, "cannot unmarshal response")
 	assert.Nil(t, response)
 }
 
